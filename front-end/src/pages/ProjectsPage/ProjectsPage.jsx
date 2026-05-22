@@ -1,43 +1,84 @@
+import { useEffect, useState } from "react";
+
 import PageLayout from "../../layouts/PageLayout";
 import ProjectCard from "../../componentes/Cards/ProjectCard";
 
-export default function ProjectsPage() {
-    const projects = [
-        {
-            title: "App Fitness",
-            student: "Maria",
-            email: "email@email.com",
-            description: "App para treinos personalizados",
-            techs: ["React"],
-            avatar: "https://i.pravatar.cc/100?img=5"
-        },
-        {
-            title: "Sistema Escolar",
-            student: "João",
-            email: "email@email.com",
-            description: "Gerenciamento de alunos",
-            techs: ["Node"],
-            avatar: "https://i.pravatar.cc/100?img=6"
-        },
-        {
-            title: "Portfólio Dev",
-            student: "Ana",
-            email: "email@email.com",
-            description: "Site pessoal responsivo",
-            techs: ["HTML", "CSS"],
-            avatar: "https://i.pravatar.cc/100?img=7"
-        }
-    ];
+import api from "../../services/api";
 
+export default function ProjectsPage() {
+
+  const [projects, setProjects] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  async function fetchProjects() {
+
+    try {
+
+      setLoading(true);
+      setError("");
+
+      const response = await api.get("/projects");
+
+      setProjects(response.data);
+
+    } catch (err) {
+
+      console.error(
+        "Erro ao buscar projetos:",
+        err
+      );
+
+      setError(
+        err.response?.data?.error ||
+        "Erro ao carregar projetos"
+      );
+
+    } finally {
+
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
     return (
-        <PageLayout
-            title="Projetos"
-            subtitle="Explore projetos desenvolvidos pelos alunos do Senai de São José"
-            placeholder="Buscar projeto..."
-            data={projects}
-            renderItem={(project) => (
-                <ProjectCard {...project} />
-            )}
-        />
+      <div>
+        Carregando projetos...
+      </div>
     );
+  }
+
+  if (error) {
+    return (
+      <div>
+        {error}
+      </div>
+    );
+  }
+
+  return (
+    <PageLayout
+      title="Projetos"
+      subtitle="Explore projetos desenvolvidos pelos alunos do Senai de São José"
+      placeholder="Buscar projeto..."
+      data={projects}
+      renderItem={(project) => (
+        <ProjectCard
+          key={project.id}
+          title={project.title}
+          student={project.student?.name}
+          email={project.student?.email}
+          description={project.description}
+          techs={project.techs}
+          avatar={project.student?.avatar}
+        />
+      )}
+    />
+  );
 }

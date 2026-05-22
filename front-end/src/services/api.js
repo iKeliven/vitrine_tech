@@ -1,7 +1,20 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://69ea53d715c7e2d51269b1cd.mockapi.io/pizzaolo/'
+  baseURL: import.meta.env.VITE_API_URL
+});
+
+api.interceptors.request.use((config) => {
+
+  const token =
+    localStorage.getItem("studentToken") ||
+    localStorage.getItem("companyToken");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
 });
 
 export default api;

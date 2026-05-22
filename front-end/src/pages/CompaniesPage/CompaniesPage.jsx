@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+
 import PageLayout from '../../layouts/PageLayout';
 import CompanyCard from '../../componentes/Cards/CompanyCard';
-import { FiSearch } from 'react-icons/fi';
+
+import api from '../../services/api';
 
 export default function CompaniesPage() {
+
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -11,26 +14,22 @@ export default function CompaniesPage() {
   }, []);
 
   const fetchCompanies = async () => {
-    const mockData = [
-      {
-        id: 1,
-        name: 'Google Brasil',
-        category: 'Tecnologia',
-        description: 'Patrocinando talentos',
-        website: 'https://google.com.br',
-        verified: true,
-      },
-      {
-        id: 2,
-        name: 'Adobe',
-        category: 'Design',
-        description: 'Apoiando criativos',
-        website: 'https://adobe.com',
-        verified: true,
-      }
-    ];
 
-    setCompanies(mockData);
+    try {
+
+      const response = await api.get("/companies");
+
+      setCompanies(response.data);
+
+    } catch (error) {
+
+      console.error(
+        "Erro ao buscar empresas:",
+        error
+      );
+
+      setCompanies([]);
+    }
   };
 
   return (
@@ -40,7 +39,10 @@ export default function CompaniesPage() {
       placeholder="Buscar empresa..."
       data={companies}
       renderItem={(company) => (
-        <CompanyCard {...company} />
+        <CompanyCard
+          key={company.id}
+          {...company}
+        />
       )}
     />
   );
