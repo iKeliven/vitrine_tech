@@ -1,0 +1,6 @@
+/* DETALHES */
+.detailsSection {
+background-color: var(--color-light);
+  gap: 80px;
+  padding: 60px 180px;
+}

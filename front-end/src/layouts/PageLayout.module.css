@@ -1,0 +1,90 @@
+.page {
+  padding: 40px 180px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.filters {
+  min-width: 280px;
+  width: clamp(280px, 35%, 440px);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-items: start;
+  margin: 40px auto;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: var(--color-gray);
+  font-size: 1.1rem;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 60vh;
+  background: url("../assets/hero-banner.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.heroContent {
+  position: relative;
+  text-align: center;
+  color: white;
+  max-width: 600px;
+}
+
+.actions {
+  margin-top: 24px;
+}
+@media (max-width: 900px) {
+  .page {
+    padding: 32px 24px;
+    margin-top: 90px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .grid {
+    gap: 16px;
+  }
+}

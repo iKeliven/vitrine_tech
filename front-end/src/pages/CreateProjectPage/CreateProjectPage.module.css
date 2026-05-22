@@ -1,0 +1,14 @@
+.page {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.form {
+  width: 100%;
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

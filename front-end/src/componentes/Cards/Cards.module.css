@@ -1,0 +1,219 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: 0.2s ease;
+    cursor: pointer;
+    width: 25vw;
+    display: flex;
+    min-height: 250px;
+    flex-direction: column;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.desc {
+    color: var(--color-gray);
+    text-align: left;
+    line-height: 1.6;
+}
+
+.content {
+    padding: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+    background: #333;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+.link {
+    color: var(--color-primary);
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.techs {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+
+
+.footer {
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+
+/** Course **/
+
+.icon {
+    font-size: 3rem;
+    margin: 30px 45% 0px 45%;
+    color: var(--color-primary);
+}
+
+/** Company **/
+.logo {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.logoPlaceholder {
+    width: 80px;
+    height: 80px;
+    background: var(--color-gray-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-white);
+
+}
+
+.student {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.2rem;
+}
+
+/* 👇 avatar */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: var(--border-surface);
+}
+
+
+/**Student Card**/
+
+
+.rank {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+
+.avatar,
+.avatarPlaceholder {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.avatar {
+    object-fit: cover;
+}
+
+.avatarPlaceholder {
+    background: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+
+.email {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+}
+
+
+.turma {
+    background: var(--color-surface);
+    color: var(--color-white);
+    padding: 5px 12px;
+    border-radius: var(--radius-lg);
+}
+
+
+.stats {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0;
+    gap: 10px;
+}
+
+.stat {
+    flex: 1;
+    background: var(--color-light);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.stat:hover {
+    transform: translateY(-2px);
+    background: var(--color-surface);
+}
+
+.value {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.label {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.stat:nth-child(1) {
+    border-top: 3px solid var(--color-danger);
+}
+
+.stat:nth-child(2) {
+    border-top: 3px solid var(--color-success);
+}
+
+.stat:nth-child(3) {
+    border-top: 3px solid var(--color-warning);
+}

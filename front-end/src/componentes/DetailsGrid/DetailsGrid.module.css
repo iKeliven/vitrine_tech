@@ -1,0 +1,28 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+/* base */
+.item {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.item:hover {
+  transform: translateY(-4px) scale(1.01);
+  transition: 0.3s;
+}
+/* tamanhos */
+.sm {
+  grid-column: span 4;
+}
+
+.md {
+  grid-column: span 6;
+}
+
+.lg {
+  grid-column: span 12;
+}

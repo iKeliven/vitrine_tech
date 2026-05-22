@@ -1,0 +1,58 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 0.9rem;
+  color: var(--color-dark);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  padding-right: 45px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: var(--color-light);
+  color: var(--color-graphite);
+  outline: none;
+  transition: 0.2s;
+}
+
+.rightIcon {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  pointer-events: none;
+}
+input::placeholder {
+  color: var(--color-graphite);
+  font-size: 1rem;
+}
+  
+/* focus bonito */
+input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-light);
+}
+
+/* erro */
+.error {
+  border-color: var(--color-danger);
+}
+
+.errorText {
+  font-size: 12px;
+  color: red;
+}

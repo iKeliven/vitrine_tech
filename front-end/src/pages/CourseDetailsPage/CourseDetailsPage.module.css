@@ -1,0 +1,42 @@
+/* HERO */
+.hero {
+  position: relative;
+  height: 80vh;
+  background: url("../../assets/hero-banner.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.heroContent {
+  position: relative;
+  text-align: center;
+  color: white;
+  max-width: 600px;
+}
+
+.actions {
+  margin-top: 24px;
+}
+
+
+.info div {
+  text-align: center;
+}
+
+.info span {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.info strong {
+  font-size: 1.4rem;
+}
