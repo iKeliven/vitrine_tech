@@ -186,3 +186,43 @@ model Transaction {
   user          User              @relation(fields: [userId], references: [id])
   projectSponsor ProjectSponsor?   @relation(fields: [sponsorId], references: [id])
 }
+
+model Course {
+  id              Int      @id @default(autoincrement())
+  title           String
+  modality        String
+  category        String?
+  shortDescription String?
+  description     String   @db.Text
+  targetAudience  String?  @db.Text
+  requirements    String?  @db.Text
+  documents       String?  @db.Text
+  image           String?
+  duration        String?
+  level           String?
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+
+  modules         CourseModule[]
+}
+
+model CourseModule {
+  id        Int      @id @default(autoincrement())
+  title     String
+  order     Int
+
+  courseId  Int
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  subjects  CourseSubject[]
+}
+
+model CourseSubject {
+  id        Int      @id @default(autoincrement())
+  title     String
+  workload  String
+  semester  String?
+
+  moduleId  Int
+  module    CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+}

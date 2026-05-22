@@ -6,6 +6,7 @@ import gamificationRoutes from "./gamification.routes.js";
 import companyRoutes from "./company.routes.js";
 import companyAuthRoutes from "./company-auth.routes.js";
 import sponsorRoutes from "./sponsor.routes.js";
+import courseRoutes from "./course.routes.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/users", userRoutes);
 router.use("/gamification", gamificationRoutes);
 router.use("/companies", companyRoutes);
 router.use("/sponsors", sponsorRoutes);
+router.use("/courses", courseRoutes);
 
 export default router;
