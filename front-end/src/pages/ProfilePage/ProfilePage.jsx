@@ -9,6 +9,7 @@ import ProjectCard from "../../componentes/ProjectCard/ProjectCard";
 import { FiPlus, FiEdit } from "react-icons/fi";
 
 import api from "../../services/api";
+import Loading from "../../componentes/Loading/Loading";
 
 export default function ProfilePage() {
 
@@ -53,9 +54,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className={styles.page}>
-        <p>Carregando perfil...</p>
-      </div>
+      <Loading />
     );
   }
 

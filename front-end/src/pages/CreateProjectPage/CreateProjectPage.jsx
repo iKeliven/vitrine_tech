@@ -12,7 +12,6 @@ import { FiArrowRight } from "react-icons/fi";
 import api from "../../services/api";
 
 export default function CreateProjectPage() {
-
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -23,48 +22,49 @@ export default function CreateProjectPage() {
     image: null
   });
 
+  const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
 
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleImage = (e) => {
+    const file = e.target.files[0];
 
-    setForm({
-      ...form,
-      image: e.target.files[0]
-    });
+    if (!file) return;
+
+    setForm((prev) => ({
+      ...prev,
+      image: file
+    }));
+
+    setPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     setLoading(true);
     setError("");
 
     try {
+      if (!form.title || !form.description || !form.techs) {
+        setError("Preencha título, descrição e tecnologias");
+        setLoading(false);
+        return;
+      }
 
       const formData = new FormData();
 
       formData.append("title", form.title);
-
-      formData.append(
-        "description",
-        form.description
-      );
-
-      formData.append(
-        "github",
-        form.github
-      );
+      formData.append("description", form.description);
 
       formData.append(
         "techs",
@@ -72,53 +72,41 @@ export default function CreateProjectPage() {
           form.techs
             .split(",")
             .map((tech) => tech.trim())
+            .filter((tech) => tech !== "")
         )
       );
 
-      if (form.image) {
-        formData.append(
-          "image",
-          form.image
-        );
+      if (form.github) {
+        formData.append("github", form.github);
       }
 
-      await api.post(
-        "/projects",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
+      if (form.image) {
+        formData.append("images", form.image);
+      }
+
+      await api.post("/projects", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
         }
-      );
+      });
 
       navigate("/profile-page");
 
     } catch (err) {
-
-      console.error(
-        "Erro ao criar projeto:",
-        err
-      );
+      console.error("Erro ao criar projeto:", err);
 
       setError(
         err.response?.data?.error ||
         "Erro ao publicar projeto"
       );
-
     } finally {
-
       setLoading(false);
     }
   };
 
   return (
     <div className={styles.page}>
-
-      <form
-        className={styles.form}
-        onSubmit={handleSubmit}
-      >
+      <form className={styles.form} onSubmit={handleSubmit}>
 
         <Title size="md">
           Novo projeto
@@ -133,6 +121,7 @@ export default function CreateProjectPage() {
         <Input
           label="Título"
           name="title"
+          placeholder="Nome do projeto"
           value={form.title}
           onChange={handleChange}
           required
@@ -141,13 +130,14 @@ export default function CreateProjectPage() {
         <Input
           label="Descrição"
           name="description"
+          placeholder="Descreva seu projeto"
           value={form.description}
           onChange={handleChange}
           required
         />
 
         <Input
-          label="Tecnologias (separadas por vírgula)"
+          label="Tecnologias"
           name="techs"
           placeholder="React, Node.js, PostgreSQL"
           value={form.techs}
@@ -158,13 +148,12 @@ export default function CreateProjectPage() {
         <Input
           label="GitHub"
           name="github"
-          placeholder="https://github.com/..."
+          placeholder="https://github.com/seuusuario/projeto"
           value={form.github}
           onChange={handleChange}
         />
 
         <div className={styles.upload}>
-
           <label>
             Imagem do projeto
           </label>
@@ -175,6 +164,13 @@ export default function CreateProjectPage() {
             onChange={handleImage}
           />
 
+          {preview && (
+            <img
+              src={preview}
+              alt="Preview do projeto"
+              className={styles.preview}
+            />
+          )}
         </div>
 
         <Button
@@ -182,15 +178,10 @@ export default function CreateProjectPage() {
           rightIcon={<FiArrowRight />}
           disabled={loading}
         >
-
-          {loading
-            ? "Publicando..."
-            : "Publicar projeto"}
-
+          {loading ? "Publicando..." : "Publicar projeto"}
         </Button>
 
       </form>
-
     </div>
   );
 }

@@ -1,11 +1,8 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import styles from "./CourseDetailsPage.module.css";
-import Title from "../../componentes/Title/Title";
-import Subtitle from "../../componentes/Subtitle/Subtitle";
 import { FiArrowRight, FiClock, FiBarChart2, FiCheckCircle } from "react-icons/fi";
 import CTA from "../../componentes/CTA/CTA";
-import DetailsGrid from "../../componentes/DetailsGrid/DetailsGrid";
 import AboutSection from "../../componentes/AboutSection/AboutSection";
 import DetailsSection from "../../componentes/DetailsSection/DetailsSection";
 import HeroContent from "../../componentes/HeroContent/HeroContent";

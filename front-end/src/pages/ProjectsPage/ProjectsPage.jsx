@@ -4,6 +4,7 @@ import PageLayout from "../../layouts/PageLayout";
 import ProjectCard from "../../componentes/Cards/ProjectCard";
 
 import api from "../../services/api";
+import Loading from "../../componentes/Loading/Loading";
 
 export default function ProjectsPage() {
 
@@ -48,9 +49,7 @@ export default function ProjectsPage() {
 
   if (loading) {
     return (
-      <div>
-        Carregando projetos...
-      </div>
+      <Loading />
     );
   }
 

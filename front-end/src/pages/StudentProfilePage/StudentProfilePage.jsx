@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styles from './StudentProfilePage.module.css';
 
 import api from '../../services/api';
+import Loading from '../../componentes/Loading/Loading';
 
 export default function StudentProfilePage() {
   const { studentId } = useParams();
@@ -46,9 +47,7 @@ export default function StudentProfilePage() {
 
   if (loading) {
     return (
-      <div className={styles.loading}>
-        Carregando perfil...
-      </div>
+      <Loading />
     );
   }
 

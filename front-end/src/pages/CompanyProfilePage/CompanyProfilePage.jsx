@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styles from './CompanyProfilePage.module.css';
 
 import api from '../../services/api';
+import Loading from '../../componentes/Loading/Loading';
 
 export default function CompanyProfilePage() {
 
@@ -48,9 +49,7 @@ export default function CompanyProfilePage() {
 
   if (loading) {
     return (
-      <div className={styles.loading}>
-        Carregando perfil...
-      </div>
+      <Loading />
     );
   }
 
