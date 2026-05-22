@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+:root {
+  /* BRAND */
+  --color-primary: #FF6A00;
+  --color-primary-hover: #e65c00;
+  --color-light: #E6EDF3;
+  --color-light-gray: #F9FAFB;
+  --color-dark: #0B0F14;
+  --color-surface: #9CA3AF;
+  --color-gray: #6a6a6a;
+  --color-graphite: #333333;
+  --color-white: #ffffff;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
+
+  /* STATUS */
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* SPACING */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* RADIUS */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
+  /* TYPO */
+  --font-base: "Inter", sans-serif;
+
+    /* BORDER */
+    --border-light: solid 1px var(--color-light-gray);
+  --border-surface: solid 1px var(--color-surface);
+}
+
+
+/*TYPOGRAPHY */
+body {
+  font-family: var(--font-base);
+  color: var(--color-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}

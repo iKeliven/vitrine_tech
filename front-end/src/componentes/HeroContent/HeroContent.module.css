@@ -1,0 +1,35 @@
+.heroContent {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.center {
+    display: flex;
+  justify-content: center;
+  text-align: center;
+  gap: 30px;
+}
+
+.textContent{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.start {
+  justify-content: center;
+  text-align: left;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.image {
+  max-width: 600px;
+width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-box);
+}
+

@@ -1,0 +1,27 @@
+.section {
+  background: var(--color-light);
+  padding: 90px 180px;
+}
+
+.grid {
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+
+  justify-content: space-around;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 60px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 40px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+

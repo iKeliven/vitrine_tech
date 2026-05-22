@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  name        String
+  lastName    String?
+  email       String   @unique
+  password    String
+  cpf         String?
+  matricula   String?
+  course      String?
+  turma       String?
+  avatar      String?
+  xp          Int      @default(0)
+  level       Int      @default(1)
+  totalXp     Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  projects    Project[]
+  userPoints  UserPoints?
+  userRewards UserReward[]
+  transactions Transaction[]
+  userLevels  UserLevel[]
+  userProgress UserProgress?
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  type        String
+  techs       String[]
+  createdAt   DateTime @default(now())
+
+  userId      Int
+  user        User @relation(fields: [userId], references: [id])
+
+  participants Participant[]
+  images      ProjectImage[]
+  links       ProjectLink?
+  projectSponsors ProjectSponsor[]
+}
+
+model Participant {
+  id        Int     @id @default(autoincrement())
+  name      String
+  avatar    String?
+
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model ProjectImage {
+  id        Int     @id @default(autoincrement())
+  url       String
+
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model ProjectLink {
+  id        Int     @id @default(autoincrement())
+  github    String?
+  figma     String?
+  behance   String?
+  demo      String?
+
+  projectId Int     @unique
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model UserPoints {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  balance   Int      @default(0)
+  totalEarned Int   @default(0)
+  totalSpent Int    @default(0)
+  updatedAt DateTime @updatedAt
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Reward {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  pointsCost  Int
+  quantity    Int      @default(100)
+  image       String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  userRewards UserReward[]
+}
+
+model UserReward {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  rewardId  Int
+  status    String   @default("pending")
+  claimedAt DateTime?
+  createdAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reward    Reward   @relation(fields: [rewardId], references: [id])
+}
+
+model UserLevel {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  level       Int
+  xpRequired  Int
+  achievedAt  DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, level])
+}
+
+model UserProgress {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  currentXp       Int      @default(0)
+  maxXpForLevel   Int      @default(100)
+  progressPercent Float    @default(0)
+  updatedAt       DateTime @updatedAt
+  
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Company {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  cnpj        String   @unique
+  password    String
+  description String?
+  logo        String?
+  website     String?
+  category    String?
+  commissionRate Float @default(0.15)
+  verified    Boolean  @default(false)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  projectSponsors ProjectSponsor[]
+}
+
+model ProjectSponsor {
+  id            Int      @id @default(autoincrement())
+  projectId     Int
+  companyId     Int
+  status        String   @default("pending")
+  amount        Float
+  commission    Float
+  studentAmount Float
+  pointsRewarded Int     @default(0)
+  approvedAt    DateTime?
+  createdAt     DateTime @default(now())
+  
+  project       Project  @relation(fields: [projectId], references: [id])
+  company       Company  @relation(fields: [companyId], references: [id])
+  transaction   Transaction?
+}
+
+model Transaction {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  type          String
+  pointsAmount  Int
+  description   String?
+  sponsorId     Int?     @unique
+  createdAt     DateTime @default(now())
+  
+  user          User              @relation(fields: [userId], references: [id])
+  projectSponsor ProjectSponsor?   @relation(fields: [sponsorId], references: [id])
+}

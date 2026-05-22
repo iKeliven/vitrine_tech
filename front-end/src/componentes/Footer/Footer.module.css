@@ -1,0 +1,8 @@
+.footer {
+  background: var(--color-dark);
+  color: var(--color-light);
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  width: 100%;
+}

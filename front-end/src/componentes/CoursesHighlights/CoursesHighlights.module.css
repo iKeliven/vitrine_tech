@@ -1,0 +1,23 @@
+.section {
+  background: var(--color-light-gray);
+  padding: 90px 180px;
+}
+
+.grid {
+  margin-top: 30px;
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 60px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 40px 16px;
+  }
+}
