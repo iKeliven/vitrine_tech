@@ -188,22 +188,23 @@ model Transaction {
 }
 
 model Course {
-  id              Int      @id @default(autoincrement())
-  title           String
-  modality        String
-  category        String?
+  id               Int      @id @default(autoincrement())
+  title            String
+  modality         String
+  category         String?
   shortDescription String?
-  description     String   @db.Text
-  targetAudience  String?  @db.Text
-  requirements    String?  @db.Text
-  documents       String?  @db.Text
-  image           String?
-  duration        String?
-  level           String?
-  active          Boolean  @default(true)
-  createdAt       DateTime @default(now())
+  description      String   @db.Text
+  targetAudience   String?  @db.Text
+  requirements     String?  @db.Text
+  documents        String?  @db.Text
+  image            String?
+  duration         String?
+  level            String?
+  officialUrl      String?
+  active           Boolean  @default(true)
+  createdAt        DateTime @default(now())
 
-  modules         CourseModule[]
+  modules          CourseModule[]
 }
 
 model CourseModule {

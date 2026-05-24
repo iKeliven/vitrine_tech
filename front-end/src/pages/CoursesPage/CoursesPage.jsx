@@ -1,78 +1,70 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import {
-  FiLayout,
-  FiCpu,
-  FiDatabase
-} from "react-icons/fi";
 
 import PageLayout from "../../layouts/PageLayout";
 import CourseCard from "../../componentes/Cards/CourseCard";
+
+import api from "../../services/api";
+import Loading from "../../componentes/Loading/Loading";
 
 export default function CoursesPage() {
 
   const navigate = useNavigate();
 
-  const courses = [
-    {
-      id: 1,
-      title: "Desenvolvimento Front-end",
-      description:
-        "Aprenda React, HTML, CSS e boas práticas de desenvolvimento moderno.",
+  const [courses, setCourses] = useState([]);
 
-      duration: "120h",
+  const [loading, setLoading] = useState(true);
 
-      level: "Intermediário",
+  const [error, setError] = useState("");
 
-      techs: [
-        "HTML",
-        "CSS",
-        "React"
-      ],
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
-      icon: <FiLayout />
-    },
+  async function fetchCourses() {
 
-    {
-      id: 2,
-      title: "Back-end com Node.js",
+    try {
 
-      description:
-        "Criação de APIs REST, autenticação JWT e integração com banco de dados.",
+      setLoading(true);
+      setError("");
 
-      duration: "100h",
+      const response = await api.get("/courses");
 
-      level: "Intermediário",
+      setCourses(response.data);
 
-      techs: [
-        "Node.js",
-        "Express",
-        "Prisma"
-      ],
+    } catch (error) {
 
-      icon: <FiCpu />
-    },
+      console.error(
+        "Erro ao buscar cursos:",
+        error
+      );
 
-    {
-      id: 3,
-      title: "Banco de Dados",
+      setError(
+        error.response?.data?.error ||
+        "Erro ao carregar cursos"
+      );
 
-      description:
-        "Modelagem relacional, SQL e integração com aplicações reais.",
+      setCourses([]);
 
-      duration: "80h",
+    } finally {
 
-      level: "Iniciante",
-
-      techs: [
-        "PostgreSQL",
-        "SQL",
-        "Prisma"
-      ],
-
-      icon: <FiDatabase />
+      setLoading(false);
     }
-  ];
+  }
+
+  if (loading) {
+    return (
+      <Loading />
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        {error}
+      </div>
+    );
+  }
 
   return (
     <PageLayout
@@ -95,13 +87,28 @@ export default function CoursesPage() {
       data={courses}
 
       renderItem={(course) => (
+
         <CourseCard
           key={course.id}
-          {...course}
+
+          title={course.title}
+
+          description={
+            course.shortDescription ||
+            course.description
+          }
+
+          duration={course.duration}
+
+          level={course.level}
+
+          image={course.image}
+
           onClick={() =>
             navigate(`/curso/${course.id}`)
           }
         />
+
       )}
     />
   );
