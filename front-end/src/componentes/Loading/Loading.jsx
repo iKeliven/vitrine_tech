@@ -1,6 +1,5 @@
 import styles from './Loading.module.css'
-import Subtitle from './Subtitle'
-
+import Subtitle from '../Subtitle/Subtitle'
 export default function Loading() {
     return (
         <div className={styles.loading}>
