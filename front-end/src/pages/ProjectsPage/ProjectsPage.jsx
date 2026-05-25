@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 
 import PageLayout from "../../layouts/PageLayout";
 import ProjectCard from "../../componentes/Cards/ProjectCard";
-
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import Loading from "../../componentes/Loading/Loading";
+import CTA from "../../componentes/CTA/CTA";
+import AboutSection from "../../componentes/AboutSection/AboutSection";
 
 export default function ProjectsPage() {
 
@@ -60,24 +62,48 @@ export default function ProjectsPage() {
       </div>
     );
   }
+  const navigate = useNavigate();
 
+  const benefits = [
+    { label: "Portfólio real para os alunos", icon: <FiFolder /> },
+    { label: "Mais engajamento nas disciplinas", icon: <FiTrendingUp /> },
+    { label: "Aproximação com o mercado", icon: <FiBriefcase /> },
+    { label: "Valorização dos projetos acadêmicos", icon: <FiTarget /> }
+  ];
+
+  function handleLogin() {
+    navigate("/login");
+  }
   return (
-    <PageLayout
-      title="Projetos"
-      subtitle="Explore projetos desenvolvidos pelos alunos do Senai de São José"
-      placeholder="Buscar projeto..."
-      data={projects}
-      renderItem={(project) => (
-        <ProjectCard
-          key={project.id}
-          title={project.title}
-          student={project.student?.name}
-          email={project.student?.email}
-          description={project.description}
-          techs={project.techs}
-          avatar={project.student?.avatar}
-        />
-      )}
-    />
+    <>
+      <PageLayout
+        title="Projetos"
+        subtitle="Explore projetos desenvolvidos pelos alunos do Senai de São José"
+        placeholder="Buscar projeto..."
+        data={projects}
+        renderItem={(project) => (
+          <ProjectCard
+            key={project.id}
+            title={project.title}
+            student={project.student?.name}
+            email={project.student?.email}
+            description={project.description}
+            techs={project.techs}
+            avatar={project.student?.avatar}
+          />
+        )}
+      />
+      <AboutSection
+        title="Por que usar o"
+        highlight="VitrineTech?"
+        list={benefits}
+      />
+
+      <CTA
+        title="Faça parte da VitrineTech"
+        buttonText="Começar agora"
+        onClick={handleLogin}
+      />
+    </>
   );
 }

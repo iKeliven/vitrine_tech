@@ -8,7 +8,7 @@ import ProjectsPage from "../pages/ProjectsPage/ProjectsPage";
 import CoursesPage from "../pages/CoursesPage/CoursesPage";
 import CourseDetailsPage from "../pages/CourseDetailsPage/CourseDetailsPage";
 import AboutPage from "../pages/AboutPage/AboutPage";
-
+import ProjectDetailsPage from "../pages/ProjectDetailsPage/ProjectDetailsPage";
 import StudentsPage from "../pages/StudentsPage/StudentsPage";
 import StudentProfilePage from "../pages/StudentProfilePage/StudentProfilePage";
 
@@ -31,7 +31,7 @@ export default function AppRoutes() {
         <Route path="/cursos" element={<CoursesPage />} />
         <Route path="/curso/:courseId" element={<CourseDetailsPage />} />
         <Route path="/sobre" element={<AboutPage />} />
-
+<Route path="/projeto/:projectId" element={<ProjectDetailsPage />} />
         <Route path="/alunos" element={<StudentsPage />} />
         <Route path="/aluno/:studentId" element={<StudentProfilePage />} />
 

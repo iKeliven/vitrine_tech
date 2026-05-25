@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import PageLayout from '../../layouts/PageLayout';
 import StudentCard from '../../componentes/Cards/StudentCard';
 
 import api from '../../services/api';
 import Loading from '../../componentes/Loading/Loading';
+import CTA from '../../componentes/CTA/CTA';
+import AboutSection from '../../componentes/AboutSection/AboutSection';
 
 export default function StudentsPage() {
 
@@ -13,6 +15,20 @@ export default function StudentsPage() {
   const [loading, setLoading] = useState(true);
 
   const [error, setError] = useState("");
+
+    const navigate = useNavigate();
+
+  const benefits = [
+    { label: "Portfólio real para os alunos", icon: <FiFolder /> },
+    { label: "Mais engajamento nas disciplinas", icon: <FiTrendingUp /> },
+    { label: "Aproximação com o mercado", icon: <FiBriefcase /> },
+    { label: "Valorização dos projetos acadêmicos", icon: <FiTarget /> }
+  ];
+
+  function handleLogin() {
+    navigate("/login");
+  }
+
 
   useEffect(() => {
     fetchStudents();
@@ -89,6 +105,7 @@ export default function StudentsPage() {
   }
 
   return (
+    <>
     <PageLayout
       title="Alunos"
 
@@ -118,5 +135,17 @@ export default function StudentsPage() {
         />
       )}
     />
+      <AboutSection
+        title="Por que usar o"
+        highlight="VitrineTech?"
+        list={benefits}
+      />
+
+      <CTA
+        title="Faça parte da VitrineTech"
+        buttonText="Começar agora"
+        onClick={handleLogin}
+      />
+    </>
   );
 }

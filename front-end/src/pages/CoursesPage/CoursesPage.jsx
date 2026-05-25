@@ -6,16 +6,25 @@ import CourseCard from "../../componentes/Cards/CourseCard";
 
 import api from "../../services/api";
 import Loading from "../../componentes/Loading/Loading";
+import AboutSection from "../../componentes/AboutSection/AboutSection";
+import CTA from "../../componentes/CTA/CTA";
 
 export default function CoursesPage() {
-
   const navigate = useNavigate();
-
   const [courses, setCourses] = useState([]);
-
   const [loading, setLoading] = useState(true);
-
   const [error, setError] = useState("");
+  
+    const benefits = [
+      { label: "Portfólio real para os alunos", icon: <FiFolder /> },
+      { label: "Mais engajamento nas disciplinas", icon: <FiTrendingUp /> },
+      { label: "Aproximação com o mercado", icon: <FiBriefcase /> },
+      { label: "Valorização dos projetos acadêmicos", icon: <FiTarget /> }
+    ];
+  
+    function handleLogin() {
+      navigate("/login");
+    }
 
   useEffect(() => {
     fetchCourses();
@@ -67,6 +76,7 @@ export default function CoursesPage() {
   }
 
   return (
+    <>
     <PageLayout
       title="Nossos Cursos"
 
@@ -110,6 +120,20 @@ export default function CoursesPage() {
         />
 
       )}
+
+   
     />
+       <AboutSection
+        title="Por que usar o"
+        highlight="VitrineTech?"
+        list={benefits}
+      />
+
+      <CTA
+        title="Faça parte da VitrineTech"
+        buttonText="Começar agora"
+        onClick={handleLogin}
+      />
+    </>
   );
 }

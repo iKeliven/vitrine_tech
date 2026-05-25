@@ -109,7 +109,55 @@ export const createProject = async (req, res) => {
       }
     });
   }
+export const getProjects = async (req, res) => {
+  try {
+    const projects = await prisma.project.findMany({
+      include: {
+        user: true,
+        images: true,
+        links: true,
+        projectSponsors: true
+      },
+      orderBy: {
+        createdAt: "desc"
+      }
+    });
 
+    res.json(projects);
+  } catch (error) {
+    res.status(500).json({
+      error: "Erro ao buscar projetos"
+    });
+  }
+};
+
+export const getProjectById = async (req, res) => {
+  try {
+    const project = await prisma.project.findUnique({
+      where: {
+        id: Number(req.params.id)
+      },
+      include: {
+        user: true,
+        images: true,
+        links: true,
+        projectSponsors: true
+      }
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        error: "Projeto não encontrado"
+      });
+    }
+
+    res.json(project);
+  } catch (error) {
+    res.status(500).json({
+      error: "Erro ao buscar projeto"
+    });
+  }
+};
   // Dar XP ao usuário por criar projeto
   const user = await prisma.user.findUnique({
     where: { id: req.user.id }

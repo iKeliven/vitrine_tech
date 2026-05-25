@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import {
   FiBarChart2,
@@ -12,34 +13,39 @@ import CompanyCard from '../../componentes/Cards/CompanyCard';
 import Loading from '../../componentes/Loading/Loading';
 
 import api from '../../services/api';
+import AboutSection from '../../componentes/AboutSection/AboutSection';
+import CTA from '../../componentes/CTA/CTA';
 
 export default function CompaniesPage() {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  
+  const navigate = useNavigate();
 
-  const companyFeatures = [
+  const benefits = [
     {
-      label: "Dashboard Completo",
-      description: "Acompanhe todos os seus projetos patrocinados em tempo real",
+      label: "Acompanhe todos os seus projetos patrocinados em tempo real",
       icon: <FiBarChart2 />
     },
     {
-      label: "Encontre Talentos",
-      description: "Navegue entre os melhores projetos e alunos da comunidade",
+      label: "Navegue entre os melhores projetos e alunos da comunidade",
       icon: <FiUsers />
     },
     {
-      label: "Gerencie Patrocínios",
-      description: "Controle suas ofertas, aprovações e comunicação com alunos",
+      label: "Controle suas ofertas, aprovações e comunicação com alunos",
       icon: <FiBriefcase />
     },
     {
-      label: "Relatórios e Métricas",
-      description: "Tenha insights sobre ROI e impacto de seus investimentos",
+      label: "Tenha insights sobre ROI e impacto de seus investimentos",
       icon: <FiTrendingUp />
     }
   ];
+
+
+  function handleLogin() {
+    navigate("/login-empresa");
+  }
 
   const companyStats = [
     {
@@ -95,23 +101,37 @@ export default function CompaniesPage() {
   }
 
   return (
-    <PageLayout
-      title="Empresas apoiadoras"
-      heroTitle="Painel da Empresa"
-      heroDescription="Gerencie seus patrocínios e invista em talentos"
-      subtitle="Empresas que apoiam alunos"
-      placeholder="Buscar empresa..."
-      data={companies}
-      infoTitle="Painel da Empresa"
-      infoDescription="Gerencie seus patrocínios e invista em talentos"
-      features={companyFeatures}
-      stats={companyStats}
-      renderItem={(company) => (
-        <CompanyCard
-          key={company.id}
-          {...company}
-        />
-      )}
-    />
+    <>
+      <PageLayout
+        title="Empresas apoiadoras"
+        heroTitle="Painel da Empresa"
+        heroDescription="Gerencie seus patrocínios e invista em talentos"
+        subtitle="Empresas que apoiam alunos"
+        placeholder="Buscar empresa..."
+        data={companies}
+        infoTitle="Painel da Empresa"
+        infoDescription="Gerencie seus patrocínios e invista em talentos"
+        features={companyFeatures}
+        stats={companyStats}
+        renderItem={(company) => (
+          <CompanyCard
+            key={company.id}
+            {...company}
+          />
+
+        )}
+      />
+      <AboutSection
+        title="Por que usar o"
+        highlight="VitrineTech?"
+        list={benefits}
+      />
+
+      <CTA
+        title="Faça parte da VitrineTech"
+        buttonText="Começar agora"
+        onClick={handleLogin}
+      />
+    </>
   );
 }

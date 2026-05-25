@@ -28,18 +28,6 @@ export default function PageLayout({
   heroDescription,
 }) {
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
-
-  const benefits = [
-    { label: "Portfólio real para os alunos", icon: <FiFolder /> },
-    { label: "Mais engajamento nas disciplinas", icon: <FiTrendingUp /> },
-    { label: "Aproximação com o mercado", icon: <FiBriefcase /> },
-    { label: "Valorização dos projetos acadêmicos", icon: <FiTarget /> }
-  ];
-
-  function handleLogin() {
-    navigate("/login");
-  }
 
   const filtered = data.filter((item) => {
     const query = search.toLowerCase();
@@ -109,18 +97,6 @@ export default function PageLayout({
           )}
         </div>
       </div>
-
-      <AboutSection
-        title="Por que usar o"
-        highlight="VitrineTech?"
-        list={benefits}
-      />
-
-      <CTA
-        title="Faça parte da VitrineTech"
-        buttonText="Começar agora"
-        onClick={handleLogin}
-      />
     </>
   );
 }
