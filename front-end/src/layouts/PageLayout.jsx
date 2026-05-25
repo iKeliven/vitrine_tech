@@ -1,21 +1,15 @@
 import styles from "./PageLayout.module.css";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import HeaderSection from "../componentes/HeaderSection/HeaderSection";
 import Subtitle from "../componentes/Subtitle/Subtitle";
 import Input from "../componentes/Input/Input";
-import AboutSection from "../componentes/AboutSection/AboutSection";
-import CTA from "../componentes/CTA/CTA";
+
 import HeroContent from "../componentes/HeroContent/HeroContent";
 
 import {
   FiSearch,
-  FiFolder,
-  FiTrendingUp,
-  FiBriefcase,
-  FiTarget
 } from "react-icons/fi";
 
 export default function PageLayout({
