@@ -7,17 +7,15 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow: hidden;
-  /* 👇 GLASS EFFECT */
+
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-
-
 .formSection {
-  padding: 60px 40px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,6 +48,20 @@
 .formRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.profileInputs {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   width: 100%;
 }
@@ -57,9 +69,8 @@
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 5px;
 }
-
 
 .formGroup input:focus {
   outline: none;
@@ -67,37 +78,67 @@
   box-shadow: var(--shadow-card);
 }
 
-.options {
+.avatarUpload {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.avatarLabel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px dashed var(--color-primary);
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.checkbox {
+.avatarLabel:hover {
+  transform: scale(1.03);
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.avatarLabel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarLabel span {
+  font-size: 34px;
+  color: var(--color-primary);
+  font-weight: 300;
+}
+
+.avatarUpload input {
+  display: none;
+}
+
+.termsBox{
   display: flex;
+  align-items: center;
   gap: 10px;
-  cursor: pointer;
-  color: var(--graphite);
-
-  white-space: nowrap;
-  /* 🔥 impede quebra */
-
+  color: var(--color-graphite);
 }
-
-.checkbox a{
+.termsBox a {
   color: var(--color-primary);
 }
 
-.checkbox input {
-  color: var(--color-primary);
-  cursor: pointer;
-  border: 1px solid var(--color-primary);
-  font-size: 1rem;
-}
-
-.checkbox input[type="checkbox"]{
+.termsLabel input {
+  margin-top: 4px;
+  flex-shrink: 0;
   accent-color: var(--color-primary);
 }
+
 
 .link span:first-child,
 .link span:last-child {
@@ -123,7 +164,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .link:hover {
@@ -131,7 +172,11 @@
 }
 
 .infoSection {
-  background: linear-gradient(135deg, var(--color-graphite) 0%, var(--color-gray) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-graphite) 0%,
+    var(--color-gray) 100%
+  );
   padding: 60px 40px;
   display: flex;
   flex-direction: column;
@@ -144,7 +189,6 @@
   flex-direction: column;
   gap: 32px;
 }
-
 
 .features {
   display: grid;
@@ -159,12 +203,14 @@
   gap: 12px;
   align-items: center;
 }
-.successMessage{
+
+.successMessage {
   display: flex;
   gap: 15px;
   font-size: 40px;
 }
-.successIcon{
+
+.successIcon {
   color: var(--color-success);
 }
 
@@ -174,12 +220,13 @@
   flex-shrink: 0;
 }
 
-.process{
+.process {
   margin-top: 30px;
   border-top: 1.5px solid var(--color-light);
   padding-top: 30px;
 }
-.process ol{
+
+.process ol {
   padding-left: 10%;
 }
 
@@ -233,5 +280,18 @@
 
   .stats {
     grid-template-columns: 1fr;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .profileRow {
+    align-items: flex-start;
+  }
+
+  .avatarUpload {
+    width: 80px;
+    height: 80px;
   }
 }

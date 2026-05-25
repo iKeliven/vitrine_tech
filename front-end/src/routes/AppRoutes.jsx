@@ -19,6 +19,8 @@ import LoginPage from "../pages/AuthPages/LoginPage";
 import SignupPage from "../pages/AuthPages/SignupPage";
 import CompanySignupPage from "../pages/AuthPages/CompanySignupPage";
 import CompanyLoginPage from "../pages/AuthPages/CompanyLoginPage";
+import StudentPoliciesPage from "../pages/policies/StudentPoliciesPage";
+import CompanyPoliciesPage from "../pages/policies/CompanyPoliciesPage";
 
 export default function AppRoutes() {
   return (
@@ -38,11 +40,14 @@ export default function AppRoutes() {
       </Route>
 
       <Route element={<AuthLayout />}>
+
+      <Route path="/politicas/aluno" element={<StudentPoliciesPage />} />
+<Route path="/politicas/empresa" element={<CompanyPoliciesPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastro" element={<SignupPage />} />
 
-        <Route path="/empresa-login" element={<CompanyLoginPage />} />
-        <Route path="/empresa-cadastro" element={<CompanySignupPage />} />
+        <Route path="/login-empresa" element={<CompanyLoginPage />} />
+        <Route path="/cadastro-empresa" element={<CompanySignupPage />} />
       </Route>
     </Routes>
   );

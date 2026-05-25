@@ -1,0 +1,36 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 80px 24px;
+  display: flex;
+  justify-content: center;
+  background: var(--color-light);
+}
+
+.card {
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 48px;
+}
+
+.card h2 {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  color: var(--color-graphite);
+  font-size: 1.2rem;
+}
+
+.card p {
+  color: var(--color-gray);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 32px 24px;
+  }
+}

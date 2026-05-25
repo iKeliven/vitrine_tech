@@ -9,7 +9,10 @@ import Subtitle from '../../componentes/Subtitle/Subtitle';
 
 import {
   FiArrowRight,
-  FiBriefcase
+  FiUsers,
+  FiTrendingUp,
+  FiEye,
+  FiLink
 } from 'react-icons/fi';
 
 import styles from "./AuthPage.module.css";
@@ -26,57 +29,88 @@ const CATEGORIAS = [
 ];
 
 export default function CompanySignupPage() {
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    cnpj: '',
     password: '',
-    description: '',
-    website: '',
+    confirmPassword: '',
     category: '',
-    commissionRate: 0.15
+    logo: null
   });
 
+  const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
-
     const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'commissionRate'
-        ? parseFloat(value)
-        : value
+      [name]: value
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
 
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+
+      setFormData((prev) => ({
+        ...prev,
+        logo: file
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
     setError('');
 
     try {
-
       if (
         !formData.name ||
         !formData.email ||
-        !formData.cnpj ||
-        !formData.password
+        !formData.password ||
+        !formData.confirmPassword
       ) {
-        setError('Nome, email, CNPJ e senha são obrigatórios');
+        setError('Nome, email e senha são obrigatórios');
         setLoading(false);
         return;
       }
 
-      await api.post("/company-auth/register", formData);
+      if (formData.password !== formData.confirmPassword) {
+        setError('As senhas não coincidem');
+        setLoading(false);
+        return;
+      }
+
+      const data = new FormData();
+
+      data.append("name", formData.name);
+      data.append("email", formData.email);
+      data.append("password", formData.password);
+      data.append("category", formData.category);
+
+      if (formData.logo) {
+        data.append("logo", formData.logo);
+      }
+
+      await api.post(
+        "/company-auth/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
 
       setSuccess(true);
 
@@ -85,12 +119,10 @@ export default function CompanySignupPage() {
       }, 2000);
 
     } catch (err) {
-
       setError(
         err.response?.data?.error ||
         'Erro ao cadastrar empresa'
       );
-
     } finally {
       setLoading(false);
     }
@@ -102,7 +134,6 @@ export default function CompanySignupPage() {
       <div className={styles.formSection}>
 
         <div className={styles.header}>
-
           <NavLink to="/">
             <img src={Logo} alt="Logotipo" />
           </NavLink>
@@ -112,15 +143,12 @@ export default function CompanySignupPage() {
           </Title>
 
           <Subtitle size="md">
-            Invista em talento, encontre os melhores projetos estudantis
+            Crie sua conta para investir em talentos e acompanhar projetos estudantis
           </Subtitle>
-
         </div>
 
         {success ? (
-
           <div className={styles.successMessage}>
-
             <div className={styles.successIcon}>
               ✓
             </div>
@@ -135,11 +163,8 @@ export default function CompanySignupPage() {
             <p>
               Você será redirecionado para o login em breve...
             </p>
-
           </div>
-
         ) : (
-
           <form
             onSubmit={handleSubmit}
             className={styles.form}
@@ -151,188 +176,130 @@ export default function CompanySignupPage() {
               </div>
             )}
 
-            <div className={styles.formGroup}>
+            <div className={styles.profileRow}>
 
-              <label>
-                Nome da Empresa *
-              </label>
-
-              <Input
-                name="name"
-                placeholder="Ex: Google Brasil"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-
-            </div>
-
-            <div className={styles.formRow}>
-
-              <div className={styles.formGroup}>
-
-                <label>
-                  Email Corporativo *
+              <div className={styles.avatarUpload}>
+                <label
+                  htmlFor="logo"
+                  title="Cadastrar logo da empresa"
+                  className={styles.avatarLabel}
+                >
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="Preview do logo"
+                    />
+                  ) : (
+                    <span>+</span>
+                  )}
                 </label>
 
-                <Input
-                  name="email"
-                  type="email"
-                  placeholder="contato@empresa.com.br"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
+                <input
+                  id="logo"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoChange}
                 />
-
               </div>
 
-              <div className={styles.formGroup}>
+              <div className={styles.profileInputs}>
+                <div className={styles.formGroup}>
+                  <label>
+                    Nome da Empresa *
+                  </label>
 
-                <label>
-                  CNPJ *
-                </label>
-
-                <Input
-                  name="cnpj"
-                  placeholder="00.000.000/0000-00"
-                  value={formData.cnpj}
-                  onChange={handleChange}
-                  required
-                />
-
-              </div>
-
-            </div>
-
-            <div className={styles.formGroup}>
-
-              <label>
-                Senha *
-              </label>
-
-              <Input
-                name="password"
-                type="password"
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-
-            </div>
-
-            <div className={styles.formRow}>
-
-              <div className={styles.formGroup}>
-
-                <label>
-                  Website
-                </label>
-
-                <Input
-                  name="website"
-                  type="url"
-                  placeholder="https://empresa.com.br"
-                  value={formData.website}
-                  onChange={handleChange}
-                />
-
-              </div>
-
-              <div className={styles.formGroup}>
-
-                <label>
-                  Categoria
-                </label>
-
-                <Dropdown
-                  name="category"
-                  placeholder="Selecione uma categoria"
-                  options={CATEGORIAS}
-                  value={formData.category}
-                  onChange={handleChange}
-                />
-
-              </div>
-
-            </div>
-
-            <div className={styles.formGroup}>
-
-              <label>
-                Descrição da Empresa
-              </label>
-
-              <Input
-                type="textarea"
-                name="description"
-                placeholder="Conte um pouco sobre sua empresa e por que investe em talentos estudantis"
-                value={formData.description}
-                onChange={handleChange}
-                className={styles.textarea}
-                rows={5}
-              />
-
-            </div>
-
-            <div className={styles.formGroup}>
-
-              <Subtitle size='md'>
-                Taxa de Comissão (%)
-              </Subtitle>
-
-              <label>
-                Percentual da plataforma sobre os patrocínios. Padrão: 15%
-              </label>
-
-              <input
-                type="number"
-                name="commissionRate"
-                min="0"
-                max="50"
-                step="0.5"
-                value={formData.commissionRate * 100}
-                onChange={(e) =>
-                  handleChange({
-                    target: {
-                      name: 'commissionRate',
-                      value: parseFloat(e.target.value) / 100
-                    }
-                  })
-                }
-                className={styles.numberInput}
-              />
-
-            </div>
-
-            <div className={styles.options}>
-
-              <div className={styles.checkbox}>
-
-                <label htmlFor="terms">
-
-                  <input
-                    type="checkbox"
-                    id="terms"
+                  <Input
+                    name="name"
+                    placeholder="Ex: Google Brasil"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                   />
+                </div>
 
-                  Concordo com os{' '}
-                  <a href="#terms">
-                    Termos de Serviço
-                  </a>
-                  {' '}e a{' '}
-                  <a href="#privacy">
-                    Política de Privacidade
-                  </a>
-
-                </label>
 
               </div>
 
-              <span></span>
+            </div>
+            <div className={styles.formGroup}>
+              <label>
+                Email Corporativo *
+              </label>
+
+              <Input
+                name="email"
+                type="email"
+                placeholder="contato@empresa.com.br"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>
+                Categoria
+              </label>
+
+              <Dropdown
+                name="category"
+                placeholder="Selecione uma categoria"
+                options={CATEGORIAS}
+                value={formData.category}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className={styles.formRow}>
+
+              <div className={styles.formGroup}>
+                <label>
+                  Senha *
+                </label>
+
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>
+                  Confirmar senha *
+                </label>
+
+                <Input
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
             </div>
+
+            <div className={styles.termsBox}>
+              <label htmlFor="terms" className={styles.termsLabel}>
+                <input
+                  type="checkbox"
+                  id="terms"
+                  required
+                />
+              </label>
+              <p>
+                Concordo com os{" "}
+                <a href="/politicas/empresa" target="_blank"> Termos de Serviçoo</a>
+                {" "}e a{" "}
+                <a href="/politicas/empresa" target="_blank">Política de Privacidade</a>
+              </p>
+
+            </div>
+
 
             <Button
               rightIcon={<FiArrowRight />}
@@ -349,7 +316,6 @@ export default function CompanySignupPage() {
               to="/empresa-login"
               className={styles.link}
             >
-
               <span></span>
 
               <p>
@@ -357,11 +323,9 @@ export default function CompanySignupPage() {
               </p>
 
               <span></span>
-
             </Link>
 
           </form>
-
         )}
 
       </div>
@@ -369,99 +333,72 @@ export default function CompanySignupPage() {
       <div className={styles.infoSection}>
 
         <div className={styles.header}>
-
           <Title>
             Por que ser um apoiador?
           </Title>
-
         </div>
 
         <div className={styles.features}>
 
           <div className={styles.feature}>
-
             <div className={styles.featureIcon}>
-              🎯
+              <FiUsers />
             </div>
 
-            <Subtitle
-              size='md'
-              weight='bold'
-              variant='white'
-            >
+            <Subtitle size='md' weight='bold' variant='white'>
               Encontre Talentos
             </Subtitle>
 
             <p>
               Acesso direto a uma comunidade de alunos qualificados em tecnologia
             </p>
-
           </div>
 
           <div className={styles.feature}>
-
             <div className={styles.featureIcon}>
-              <FiBriefcase />
+              <FiTrendingUp />
             </div>
 
-            <Subtitle
-              size='md'
-              weight='bold'
-              variant='white'
-            >
+            <Subtitle size='md' weight='bold' variant='white'>
               Retorno Real
             </Subtitle>
 
             <p>
               Invista em projetos promissores com potencial de crescimento
             </p>
-
           </div>
 
           <div className={styles.feature}>
-
             <div className={styles.featureIcon}>
-              <FiBriefcase />
+              <FiEye />
             </div>
 
-            <Subtitle
-              size='md'
-              weight='bold'
-              variant='white'
-            >
+            <Subtitle size='md' weight='bold' variant='white'>
               Visibilidade
             </Subtitle>
 
             <p>
               Seja reconhecido como empresa apoiadora de inovação
             </p>
-
           </div>
 
           <div className={styles.feature}>
-
             <div className={styles.featureIcon}>
-              <FiBriefcase />
+              <FiLink />
             </div>
 
-            <Subtitle
-              size='md'
-              weight='bold'
-              variant='white'
-            >
+            <Subtitle size='md' weight='bold' variant='white'>
               Parcerias Estratégicas
             </Subtitle>
 
             <p>
               Crie relacionamentos duradouros com talento emergente
             </p>
-
           </div>
 
         </div>
 
         <div className={styles.process}>
-
           <Title size="md">
             Como funciona?
           </Title>
@@ -473,7 +410,6 @@ export default function CompanySignupPage() {
             <li>Acompanhe o desenvolvimento e progresso</li>
             <li>Estabeleça parcerias duradouras</li>
           </ol>
-
         </div>
 
       </div>

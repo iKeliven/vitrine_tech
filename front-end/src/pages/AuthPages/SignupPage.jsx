@@ -173,8 +173,7 @@ export default function SignupPage() {
               </div>
             )}
 
-            <div className={styles.formRow}>
-
+            <div className={styles.profileRow}>
               <div className={styles.avatarUpload}>
                 <label
                   htmlFor="avatar"
@@ -196,29 +195,30 @@ export default function SignupPage() {
                 />
               </div>
 
-              <div className={styles.formGroup}>
-                <label>Nome *</label>
+              <div className={styles.profileInputs}>
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label>Nome *</label>
+                    <Input
+                      name="name"
+                      placeholder="Seu nome"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label>Sobrenome</label>
 
-                <Input
-                  name="name"
-                  placeholder="Seu nome"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
+                    <Input
+                      name="lastName"
+                      placeholder="Seu sobrenome"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
               </div>
-
-              <div className={styles.formGroup}>
-                <label>Sobrenome</label>
-
-                <Input
-                  name="lastName"
-                  placeholder="Seu sobrenome"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
-              </div>
-
             </div>
 
             <div className={styles.formRow}>
@@ -317,30 +317,23 @@ export default function SignupPage() {
 
             </div>
 
-            <div className={styles.options}>
-
-              <div className={styles.checkbox}>
-
-                <label htmlFor="terms">
-
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    required
-                  />
-
-                  Concordo com os{' '}
-                  <a href="#terms">
-                    Termos de Serviço
-                  </a>
-                  {' '}e a{' '}
-                  <a href="#privacy">
-                    Política de Privacidade
-                  </a>
-
-                </label>
-
-              </div>
+            <div className={styles.termsBox}>
+              <label htmlFor="terms" className={styles.termsLabel}>
+                <input
+                  type="checkbox"
+                  id="terms"
+                  required
+                />
+              </label>
+              <p>
+                Concordo com os{" "}
+                <a href="/politicas/aluno" target="_blank">
+                  Termos de Serviço</a>
+                {" "}e a{" "}
+                <a href="/politicas/aluno" target="_blank">
+                  Política de Privacidade
+                </a>
+              </p>
 
             </div>
 
