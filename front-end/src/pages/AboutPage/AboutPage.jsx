@@ -20,7 +20,7 @@ export default function AboutPage() {
   ];
 
   function handleLogin() {
-    navigate('/login');
+    navigate('/cadastro');
   }
 
   return (

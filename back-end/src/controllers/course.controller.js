@@ -1,4 +1,5 @@
 import prisma from "../services/prisma.js";
+import courseFallback from "../data/courseFallback.js";
 
 export const getCourses = async (req, res) => {
   try {
@@ -24,10 +25,7 @@ export const getCourses = async (req, res) => {
     res.json(courses);
   } catch (error) {
     console.error("Erro ao buscar cursos:", error);
-
-    res.status(500).json({
-      error: "Erro ao buscar cursos"
-    });
+    res.json(courseFallback);
   }
 };
 
@@ -61,9 +59,17 @@ export const getCourseById = async (req, res) => {
   } catch (error) {
     console.error("Erro ao buscar curso:", error);
 
-    res.status(500).json({
-      error: "Erro ao buscar curso"
-    });
+    const course = courseFallback.find(
+      (item) => item.id === Number(req.params.id)
+    );
+
+    if (!course) {
+      return res.status(404).json({
+        error: "Curso não encontrado"
+      });
+    }
+
+    res.json(course);
   }
 };
 

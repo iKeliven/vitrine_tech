@@ -2,23 +2,26 @@ import prisma from "../services/prisma.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 
 export const registerCompany = async (req, res) => {
-  const { name, email, cnpj, password, description, website, category, commissionRate } = req.body;
+  const { name, email, password, category } = req.body;
 
-  if (!name || !email || !cnpj || !password) {
-    return res.status(400).json({ error: "Nome, email, CNPJ e senha são obrigatórios" });
+  if (!name || !email || !password) {
+    return res.status(400).json({
+      error: "Nome, email e senha são obrigatórios"
+    });
   }
 
-  const existingCompany = await prisma.company.findFirst({
-    where: {
-      OR: [{ email }, { cnpj }]
-    }
+  const existingCompany = await prisma.company.findUnique({
+    where: { email }
   });
 
   if (existingCompany) {
-    return res.status(409).json({ error: "Email ou CNPJ já cadastrado" });
+    return res.status(409).json({
+      error: "Email já cadastrado"
+    });
   }
 
   const hash = await bcrypt.hash(password, 10);
@@ -27,16 +30,19 @@ export const registerCompany = async (req, res) => {
     data: {
       name,
       email,
-      cnpj,
       password: hash,
-      description,
-      website,
       category,
-      commissionRate: commissionRate || 0.15
+      cnpj: `pendente-${Date.now()}`,
+      commissionRate: 0.15,
+      logo: req.file ? req.file.filename : null
     }
   });
 
-  const token = jwt.sign({ id: company.id, type: "company" }, JWT_SECRET, { expiresIn: "7d" });
+  const token = jwt.sign(
+    { id: company.id, type: "company" },
+    JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 
   const { password: _password, ...safeCompany } = company;
 

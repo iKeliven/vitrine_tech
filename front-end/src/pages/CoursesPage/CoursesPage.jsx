@@ -8,6 +8,12 @@ import api from "../../services/api";
 import Loading from "../../componentes/Loading/Loading";
 import AboutSection from "../../componentes/AboutSection/AboutSection";
 import CTA from "../../componentes/CTA/CTA";
+import {
+  FiFolder,
+  FiTrendingUp,
+  FiBriefcase,
+  FiTarget
+} from "react-icons/fi";
 
 export default function CoursesPage() {
   const navigate = useNavigate();
@@ -23,7 +29,7 @@ export default function CoursesPage() {
     ];
   
     function handleLogin() {
-      navigate("/login");
+      navigate("/cadastro");
     }
 
   useEffect(() => {

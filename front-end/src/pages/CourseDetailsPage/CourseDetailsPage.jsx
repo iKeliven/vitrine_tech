@@ -8,7 +8,11 @@ import {
   FiArrowRight,
   FiClock,
   FiBarChart2,
-  FiCheckCircle
+  FiCheckCircle,
+  FiFolder,
+FiTrendingUp,
+FiBriefcase,
+FiTarget
 } from "react-icons/fi";
 
 import CTA from "../../componentes/CTA/CTA";

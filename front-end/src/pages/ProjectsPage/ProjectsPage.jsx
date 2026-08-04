@@ -7,9 +7,15 @@ import api from "../../services/api";
 import Loading from "../../componentes/Loading/Loading";
 import CTA from "../../componentes/CTA/CTA";
 import AboutSection from "../../componentes/AboutSection/AboutSection";
+import {
+  FiFolder,
+  FiTrendingUp,
+  FiBriefcase,
+  FiTarget
+} from "react-icons/fi";
 
 export default function ProjectsPage() {
-
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -62,7 +68,7 @@ export default function ProjectsPage() {
       </div>
     );
   }
-  const navigate = useNavigate();
+
 
   const benefits = [
     { label: "Portfólio real para os alunos", icon: <FiFolder /> },
@@ -72,7 +78,7 @@ export default function ProjectsPage() {
   ];
 
   function handleLogin() {
-    navigate("/login");
+    navigate("/cadastro");
   }
   return (
     <>
@@ -85,11 +91,11 @@ export default function ProjectsPage() {
           <ProjectCard
             key={project.id}
             title={project.title}
-            student={project.student?.name}
-            email={project.student?.email}
+            student={project.user?.name}
+            email={project.user?.email}
             description={project.description}
             techs={project.techs}
-            avatar={project.student?.avatar}
+            avatar={project.user?.avatar}
           />
         )}
       />

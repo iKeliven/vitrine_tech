@@ -20,7 +20,7 @@ export default function CompaniesPage() {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+
   const navigate = useNavigate();
 
   const benefits = [
@@ -44,7 +44,7 @@ export default function CompaniesPage() {
 
 
   function handleLogin() {
-    navigate("/login-empresa");
+    navigate("/cadastro-empresa");
   }
 
   const companyStats = [
@@ -111,7 +111,7 @@ export default function CompaniesPage() {
         data={companies}
         infoTitle="Painel da Empresa"
         infoDescription="Gerencie seus patrocínios e invista em talentos"
-        features={companyFeatures}
+        features={benefits}
         stats={companyStats}
         renderItem={(company) => (
           <CompanyCard

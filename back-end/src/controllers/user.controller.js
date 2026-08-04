@@ -2,8 +2,8 @@ import prisma from "../services/prisma.js";
 import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
-  const { name, email, password, lastName, cpf, matricula, course, turma, avatar } = req.body;
-
+  const { name, email, password, lastName, cpf, matricula, course, turma } = req.body;
+  const avatar = req.file ? req.file.filename : null;
   if (!name || !email || !password) {
     return res.status(400).json({ error: "Nome, email e senha são obrigatórios" });
   }

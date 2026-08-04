@@ -26,7 +26,7 @@ export default function StudentProfilePage() {
       setLoading(true);
       setError('');
 
-      const response = await api.get(`/users/${studentId}`);
+      const response = await api.get("/:id", getUserById);
 
       setStudent(response.data);
 

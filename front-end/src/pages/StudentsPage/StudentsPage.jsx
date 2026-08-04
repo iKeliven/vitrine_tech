@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '../../layouts/PageLayout';
 import StudentCard from '../../componentes/Cards/StudentCard';
+import {
+  FiFolder,
+  FiTrendingUp,
+  FiBriefcase,
+  FiTarget
+} from "react-icons/fi";
 
 import api from '../../services/api';
 import Loading from '../../componentes/Loading/Loading';
@@ -26,7 +32,7 @@ export default function StudentsPage() {
   ];
 
   function handleLogin() {
-    navigate("/login");
+    navigate("/cadastro");
   }
 
 
